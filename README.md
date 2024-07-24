@@ -14,36 +14,28 @@
   <p align="center">Home Page</p>
 </div>
 
-# **Youtube Video for step by step Demonstration!**
-[![Video Tutorial](https://img.youtube.com/vi/g8X5AoqCJHc/0.jpg)](https://youtu.be/g8X5AoqCJHc)
-
-
-## Susbcribe:
-[https://www.youtube.com/@cloudchamp?
-](https://www.youtube.com/@cloudchamp?sub_confirmation=1)
-
 # Deploy Netflix Clone on Cloud using Jenkins - DevSecOps Project!
 
 ### **Phase 1: Initial Setup and Deployment**
 
-**Step 1: Launch EC2 (Ubuntu 22.04):**
+**Step 1: Launch Azure VM (Ubuntu 22.04):**
 
-- Provision an EC2 instance on AWS with Ubuntu 22.04.
+- Provision an Linux instance on Azure with Ubuntu 22.04.
 - Connect to the instance using SSH.
 
 **Step 2: Clone the Code:**
 
 - Update all the packages and then clone the code.
-- Clone your application's code repository onto the EC2 instance:
+- Clone your application's code repository onto the Azure instance:
     
     ```bash
-    git clone https://github.com/N4si/DevSecOps-Project.git
+    git clone https://github.com/Hamsa2009/DevSecOps-Project.git
     ```
     
 
 **Step 3: Install Docker and Run the App Using a Container:**
 
-- Set up Docker on the EC2 instance:
+- Set up Docker on the Azure instance:
     
     ```bash
     
@@ -85,7 +77,7 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
 **Phase 2: Security**
 
 1. **Install SonarQube and Trivy:**
-    - Install SonarQube and Trivy on the EC2 instance to scan for vulnerabilities.
+    - Install SonarQube and Trivy on the Azure instance to scan for vulnerabilities.
         
         sonarqube
         ```
@@ -119,7 +111,7 @@ docker build --build-arg TMDB_V3_API_KEY=<your-api-key> -t netflix .
 **Phase 3: CI/CD Setup**
 
 1. **Install Jenkins for Automation:**
-    - Install Jenkins on the EC2 instance to automate deployment:
+    - Install Jenkins on the Azure instance to automate deployment:
     Install Java
     
     ```bash
@@ -204,7 +196,7 @@ pipeline {
         }
         stage('Checkout from Git') {
             steps {
-                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
+                git branch: 'main', url: 'https://github.com/Hamsa2009/DevSecOps-Project.git'
             }
         }
         stage("Sonarqube Analysis") {
@@ -294,7 +286,7 @@ pipeline{
         }
         stage('Checkout from Git'){
             steps{
-                git branch: 'main', url: 'https://github.com/N4si/DevSecOps-Project.git'
+                git branch: 'main', url: 'https://github.com/Hamsa2009/DevSecOps-Project.git'
             }
         }
         stage("Sonarqube Analysis "){
@@ -333,20 +325,20 @@ pipeline{
                 script{
                    withDockerRegistry(credentialsId: 'docker', toolName: 'docker'){   
                        sh "docker build --build-arg TMDB_V3_API_KEY=<yourapikey> -t netflix ."
-                       sh "docker tag netflix nasi101/netflix:latest "
-                       sh "docker push nasi101/netflix:latest "
+                       sh "docker tag netflix hamsa20/netflix:latest "
+                       sh "docker push hamsa20/netflix:latest "
                     }
                 }
             }
         }
         stage("TRIVY"){
             steps{
-                sh "trivy image nasi101/netflix:latest > trivyimage.txt" 
+                sh "trivy image hamsa20/netflix:latest > trivyimage.txt" 
             }
         }
         stage('Deploy to container'){
             steps{
-                sh 'docker run -d --name netflix -p 8081:80 nasi101/netflix:latest'
+                sh 'docker run -d --name netflix -p 8081:80 hamsa20/netflix:latest'
             }
         }
     }
@@ -736,7 +728,7 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
 
 1. **Install ArgoCD:**
 
-   You can install ArgoCD on your Kubernetes cluster by following the instructions provided in the [EKS Workshop](https://archive.eksworkshop.com/intermediate/290_argocd/install/) documentation.
+   You can install ArgoCD on your Kubernetes cluster by following the instructions provided in the [AKS ArgoCD Setup](https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#aks) documentation.
 
 2. **Set Your GitHub Repository as a Source:**
 
@@ -754,5 +746,5 @@ To deploy an application with ArgoCD, you can follow these steps, which I'll out
 
 **Phase 7: Cleanup**
 
-1. **Cleanup AWS EC2 Instances:**
-    - Terminate AWS EC2 instances that are no longer needed.
+1. **Cleanup Azure EC2 Instances:**
+    - Terminate Azure instances that are no longer needed.
