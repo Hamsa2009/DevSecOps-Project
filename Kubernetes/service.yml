@@ -7,8 +7,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 85
-    targetPort: 85
+  - port: 84
+    targetPort: 84
     nodePort: 30007
   selector:
     app: netflix-app
