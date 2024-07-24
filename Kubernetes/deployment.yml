@@ -18,4 +18,4 @@ spec:
       - name: netflix-app
         image: hamsa20/netflix:latest
         ports:
-        - containerPort: 85
+        - containerPort: 84
